@@ -1,6 +1,6 @@
 ---
-title: "Introducción a R y Tidyverse"
-subtitle: "Sesión 06"  
+title: "Introducción a R y Tidyverse II"
+subtitle: "Sesión 03"  
 author: 
   - "Laboratorio de Innovación en Salud"
 date: '`r Sys.Date()`'
@@ -100,13 +100,13 @@ xaringanExtra::use_progress_bar(color = "#0051BA",
 
 ```{r metathis, echo=FALSE}
 meta() %>%
-  meta_name("github-repo" = "healthinnovation/xaringan-innovar") %>% 
+  meta_name("github-repo" = "healthinnovation/bootcamp-introduccion-r-tidyverse-II") %>% 
   meta_social(
     title = "Plantilla Innovar Xaringan",
-    description = "Curso de Introducción a R y Tidyverse: Sesión 06",
-    url = "https://healthinnovation.github.io/xaringan-innovar/sesion_06/#1",
-    image = "https://healthinnovation.github.io/xaringan-innovar/img/cover-sesion06.png",
-    image_alt = "Cover de la Sesión 06 del curso de Introducción a R y Tidyverse",
+    description = "Curso de Introducción a R y Tidyverse II: Sesión 03",
+    url = "https://healthinnovation.github.io/bootcamp-introduccion-r-tidyverse-II/sesion_03/#1",
+    image = "https://healthinnovation.github.io/bootcamp-introduccion-r-tidyverse-II/sesion_03/img/cover-sesion03.png",
+    image_alt = "Cover de la Sesión 03 del curso de Introducción a R y Tidyverse II",
     og_type = "website",
     og_author = "Laboratorio de Innovación en Salud",
     twitter_card_type = "summary_large_image",
