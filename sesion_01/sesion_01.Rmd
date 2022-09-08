@@ -32,6 +32,7 @@ library(xaringanthemer)
 library(magrittr)
 library(metathis)
 library(countdown)
+library(flair)
 library(flipbookr)
 ```
 
@@ -142,7 +143,6 @@ meta() %>%
 - Algunas operaciones con menejo de tiempo y horas (paquete `lubridate`)
 - Cálculo de múltiples variables a la vez (`across()`)
 - Operaciones por filas (`rowwise()`) y con múltiples variables (`c_across()`)
-
 ]]
 
 ---
@@ -151,15 +151,29 @@ class: center, middle, inverse
 # Exploración competencial
 
 ---
-## Mutate (case_when)
-.panelset[
-.panel[.panel-name[Mutate II]
-.pull-right[
-<ol start="3">
-  <li>Configurar respuestas <code>NA</code></li>
-</ol>
+## Importación de datos
 
-Para reemplazar respuestas dependiendo de una condición en particular se puede utilizar la función `case_when()` dentro de un `mutate()`
+.line-space1-7[.font110[Continuaremos usando la base de datos del ECA  sobre la [erradicación de la infección por *Helicobácter Pylori*](https://www.nature.com/articles/s41598-018-27482-2) explicado en la [sesión 02](https://healthinnovation.github.io/curso-introduccion-r-tidyverse/sesion_02/#14). Recordar siempre cargar tidyverse (`library()`)]]
+
+```{r include=FALSE}
+library(tidyverse)
+```
+
+.scroll-output350[
+```{r R.options = list(width = 90)}
+trial_data <- readxl::read_excel("data/researchdata.xlsx") %>%
+  janitor::clean_names() %>%
+  rename(
+    follow_4_weeks = follow_up13c_ubt_4_weeks_after_therapy
+  )
+trial_data
+```
+]
+
+---
+## Categorización de variables
+
+.line-space1-7[.font110[Para reemplazar respuestas dependiendo de una condición en particular se puede utilizar la función `case_when()` dentro de un `mutate()`]]
 
 .code80[
 ```{r eval=FALSE}
@@ -172,10 +186,7 @@ trial_data %>%
   )
 ```
 ]
-De esta manera en la variable `Var` se reemplazará todos los casos que registren el dato de **Text** por **New_Text**. 
-]
-
-]]
+.line-space1-7[.font110[De esta manera en la variable `Var` se reemplazará todos los casos que registren el dato de **Text** por **New_Text**.]]
 
 
 ---
@@ -184,7 +195,7 @@ De esta manera en la variable `Var` se reemplazará todos los casos que registre
 .panelset[
 .panel[.panel-name[Explicación previa del NA]
 .line-space1-5[
-Al importar las bases de datos dentro de R, la gran mayoría de funciones (como `read_excel()`) interpretarán los valors en blanco o celdas vacías como reales `NA`. Sin embargo si en las celdas se ha llenado explícitamente el texto **NA** o se ha usado alguna codificación diferente, el valor de `NA` no se introducirá automáticamente y habrá que indicarlo como tal (`case_when()`).
+Al importar las bases de datos dentro de R, la gran mayoría de funciones (como `read_excel()`) interpretarán los valores en blanco o celdas vacías como reales `NA`. Sin embargo si en las celdas se ha llenado explícitamente el texto **NA** o se ha usado alguna codificación diferente, el valor de `NA` no se introducirá automáticamente y habrá que indicarlo como tal (`case_when()`).
 ]
 
 .pull-left[
@@ -246,7 +257,38 @@ typeof(NA_character_)
 typeof(NA_real_)
 ```
 
-]]
+]
+.panel[.panel-name[Verificación]
+.pull-left[
+
+Recordar que todas las funciones que modifiquen variables pueden entrar dentro de un solo `mutate()`
+
+```{r}
+trial_data <- trial_data %>% 
+  mutate(
+    follow_4_weeks = case_when(
+      follow_4_weeks == "NA" ~ NA_character_,
+      TRUE ~ follow_4_weeks
+    ),
+    adverse_drug_reactions = case_when(
+      adverse_drug_reactions == "NA" ~ NA_character_,
+      TRUE ~ adverse_drug_reactions
+    )
+  )
+```
+]
+
+.pull-right[
+
+Ahora al ver el resultado de `count()`, veremos que solo hay un `NA` en el output, que es el reconocimiento real de valores faltantes.
+.scroll-output300[
+```{r}
+trial_data %>% 
+  count(randomized_group, 
+        follow_4_weeks,
+        adverse_drug_reactions)
+```
+]]]]
 
 ---
 ## Más sobre `case_when()`
@@ -318,142 +360,6 @@ nycflights13::flights %>%
 ]
 
 ---
-## Más usos de `count()` y `arrange()`
-
-.panelset[
-.panel[.panel-name[Intro]
-
-
-
-.pull-left[
-```{r}
-trial_data <- trial_data %>% 
-  mutate(
-    follow_4_weeks = case_when(
-      follow_4_weeks == "NA" ~ NA_character_,
-      TRUE ~ follow_4_weeks
-    ),
-    adverse_drug_reactions = case_when(
-      adverse_drug_reactions == "NA" ~ NA_character_,
-      TRUE ~ adverse_drug_reactions
-    )
-  )
-```
-]
-
-.pull-right[
-.scroll-output300[
-```{r}
-trial_data %>% 
-  count(randomized_group, 
-        follow_4_weeks,
-        adverse_drug_reactions)
-```
-]]
-]
----
-## Uso de `filter()`
-
-.panelset[
-.panel[.panel-name[¿Para qué sirve?]
-.pull-left[.line-space1-7[.font110[
-- Ayuda a crear un subconjunto de datos con todas las filas que cumplan tus condiciones. 
-- Pueden incluirse varias condiciones dentro de un filtro.
-- Funciones y operadores útiles:
-  - De comparación: `==`, `<`, `>`, `<=`, `>=`, `!=`, `%in%`, `is.na`, `!is.na`
-  - De lógica: `&`, `|`, `xor`, `!`, `any()`, `all()`
-]]]
-
-.pull-right[.scroll-output375[
-```{r R.options = list(width = 42)}
-library(tidyverse)
-nycflights13::flights
-```
-
-]]]
-
-.panel[.panel-name[Ejemplo]
-
-.pull-left[
-Esta data muestra información de la [NOAA](https://www.nhc.noaa.gov/data/#hurdat) acerca de tormentas desde 1975 hasta el 2020.
-
-.scroll-output325[
-```{r}
-storms %>% 
-  count(status, category)
-```
-]]
-
-.pull-right[
-Si quisieramos solo trabajar con los huracanes de categoría 5, tendríamos que hacer lo siguiente con la función `filter()`:
-
-.scroll-output300[
-```{r R.options = list(width = 42)}
-storms %>% 
-  filter(status == "hurricane",
-         category == 5)
-```
-
-]]
-]
-]
-
----
-## Uso de `select()`
-
-.pull-left[.line-space2-0[.font110[
-- Esta función permite **seleccionar** las variables de interés.
-- Puede ser útil previo a un análisis de datos o solo si se desea tener una data menos larga.
-- Para usarlo se puede nombrar a las variables dentro de la función `select()` y/o usar el comando `:` para indcar **hasta**.
-]]]
-
-.pull-right[
-
-```{r echo=FALSE, out.width="90%", fig.align='center', dpi=200, fig.retina=2}
-knitr::include_graphics("img/select_01.png",
-                        dpi = 300)
-```
-
-]
-
-
----
-
-## Uso de `select()`
-
-```{r echo=FALSE, out.width="55%", fig.align='center', dpi=200, fig.retina=2}
-knitr::include_graphics("img/select_02.png",
-                        dpi = 300)
-```
-
-
----
-## Uso de `select()`
-
-El uso de las funciones con **pipe** (` %>% `) permite anidarlas una tras otra. Además, si las columnas están una a lado de otra, podemos usar `:` para seleccionar varios al mismo tiempo.
-
-.pull-left[
-.scroll-output400[
-```{r R.options = list(width = 42)}
-storms %>% 
-  filter(status == "hurricane",
-         category == 5) %>% 
-  select(name, year, month, day, hour, wind)
-```
-]]
-
-.pull-right[
-.scroll-output400[
-```{r R.options = list(width = 42)}
-storms %>% 
-  filter(status == "hurricane",
-         category == 5) %>% 
-  select(name:hour, wind)
-```
-]]
-
-
----
 
 ## ¡Hazlo tú mismo!
 
@@ -474,7 +380,7 @@ countdown(minutes = 10,
 ```
 ---
 
-## Mutate II
+## Más sobre `mutate()` 
 
 .pull-left[
 .font90[
@@ -486,7 +392,7 @@ knitr::include_graphics("img/mutate_ilustration.png",
 
 .pull-right[.line-space1-5[.font110[
 Esta función del paquete `dplyr` nos permite agregar o modificar las variables actuales en un conjunto de datos (dataframe). 
-Tal y como ya lo vimos en la [sesión 03](https://healthinnovation.github.io/curso-introduccion-r-tidyverse/sesion_03/#6), esta función puede hacer cambios sobre una o múltiples variables existentes, así como crear varias a la vez serparándolas con una coma [(Y. Wendy Huynh,2019)](https://bookdown.org/yih_huynh/Guide-to-R-Book/mutate.html).
+Tal y como ya lo vimos, esta función puede hacer cambios sobre una o múltiples variables existentes, así como crear varias a la vez serparándolas con una coma [(Y. Wendy Huynh,2019)](https://bookdown.org/yih_huynh/Guide-to-R-Book/mutate.html).
 
 ```{r eval=FALSE}
 data %>% 
@@ -499,9 +405,9 @@ data %>%
 ]]]
 
 ---
-## Mutate II: Uso de `across()`
+## Múltiples variables: Uso de `across()`
 
-Haremos la prueba con la base `storm`. Usando la función `across()` para aplicar una función a múltiples variables a la vez. En esta ocasión transformaremos en **factores** a las variables `status` y `category` de tormentas.
+.line-space1-7[.font110[Haremos la prueba con la base `storm`. Usando la función `across()` para aplicar una función a múltiples variables a la vez. En esta ocasión transformaremos en **factores** a las variables `status` y `category` de tormentas.]]
 
 .pull-left[.scroll-output350[
 ```{r R.options = list(width = 42)}
@@ -527,13 +433,90 @@ storms %>%
 ]]
 
 ---
+
+## Operaciones por filas
+
+.line-space1-7[.font110[En algunas ocasiones tenemos base de datos en el que se tiene múltiples variables sobre un mismo caso a través de columnas. Aunque pasarlos a un formato **tidy long** tal y como se encuentra la data `storms` es una buena idea, a veces es difícil cambiar el formato o se prefiere mantenerlo así. Veamos una ejemplificación modificando la data `gapminder` a un formato **wider**.]]
+
+.pull-left[
+```{r echo = TRUE, results = 'hide'}
+gapminder_wider <- gapminder::gapminder %>%
+  pivot_wider(
+    names_from = year,
+    values_from = c(lifeExp:gdpPercap)
+  )
+```
+]
+
+.pull-right[.scroll-output325[
+```{r echo=FALSE, R.options = list(width = 45)}
+gapminder::gapminder %>%
+  pivot_wider(
+    names_from = year,
+    values_from = c(lifeExp:gdpPercap)
+  )
+```
+]]
+
+---
+## Uso de `rowwise()`
+
+.line-space1-7[.font110[Hagamos una prueba con con `gapminder_wider` para obtener el promedio de la esperanza de vida de sus 3 primeros registros anuales disponibles:]]
+
+.pull-left[
+```{r R.options = list(width = 42), eval=FALSE}
+gapminder_wider %>%
+  rowwise() %>%
+  mutate(
+    avg_lifeExp_52_62 = mean(c(
+      lifeExp_1952,
+      lifeExp_1957,
+      lifeExp_1962
+    )),
+    .after = "continent"
+  )
+```
+]
+
+.pull-left[.scroll-output350[
+```{r R.options = list(width = 42), echo=FALSE}
+gapminder_wider %>%
+  rowwise() %>%
+  mutate(
+    avg_lifeExp_52_62 = mean(c(
+      lifeExp_1952,
+      lifeExp_1957,
+      lifeExp_1962
+    )),
+    .after = "continent"
+  )
+```
+]]
+
+---
+## Uso de `c_across()`
+
+El uso de `c()` podría ser suficiente para algunos casos, pero es muy limitante... si quisieramos seleccionar bloques de columnas (`var1:var100`) o usar alguna función `tidyselect` como por ejemplo `starts_with()`, simplemente no podríamos. Para ello emplearemos `c_across()` en "reemplazo". Por ejemplo, para obtener el promedio de esperanza de vida de todos los años registrados.
+
+.scroll-output300[
+```{r R.options = list(width = 80)}
+gapminder_wider %>%
+  rowwise() %>%
+  mutate(
+    avg_lifeExp = mean(c_across(starts_with("lifeExp"))),
+    .after = "continent"
+  )
+```
+]
+
+---
 ```{r, echo=FALSE}
 description_mut_lubridate <- ".line-space1-5[.font110[Muchas veces durante el pre-procesamiento de datos tenemos que enfrentarnos a manejo de fechas (crear, transformar, etc.). Para estos fines podemos usar [las funciones del paquete `lubridate`](https://r4ds.had.co.nz/dates-and-times.html). 
 
 Para tener una mejor apreciación de la variable de fecha que crearemos, usaremos `relocate()` para reposicionar a la variable creada.]]"
 ```
 
-`r chunk_reveal("mutate_lubr_1", break_type = "user", title = paste0("## Mutate II: lubridate \n", description_mut_lubridate), chunk_options = "R.options = list(width = 55)")`
+`r chunk_reveal("mutate_lubr_1", break_type = "user", title = paste0("## Operación con fechas: lubridate \n", description_mut_lubridate), chunk_options = "R.options = list(width = 55)")`
 
 
 ```{r mutate_lubr_1, include = FALSE}
@@ -550,204 +533,6 @@ storms %>%
     height: 275px;
     overflow-y: auto !important;
 }
-```
-
----
-## Uso de `group_by()`
-
-.line-space1-7[.font110[
-Esta función permite poder indicarle a R que las operaciones que hagamos en adelante, sean divididas y aplicadas por las agrupaciones que sea haya formado. Es decir, que se puede hacer la agrupación por una o múltiples variables.
-]]
-
-.pull-left[.scroll-output350[
-```{r R.options = list(width = 42)}
-storms %>% 
-  filter(year >= 2010) %>% 
-  group_by(name)
-```
-]]
-.line-space2-0[.font110[
-.pull-right[
-La función `group_by()` solo configura como será el tratamiento de la data en adelante. No observará ningún cambio percepctible en los datos con excepción de:
-```{r eval=FALSE}
-# Groups:   name [112]
-```
-]]]
-
----
-## Uso de `summarise()`
-
-.line-space1-7[.code110[
-Esta función permite obtener algun resumen de los datos, como la media, desviación estándar, valores máximos, mínimos, calculos de prueba estadística, y la mayoría de funciones de esta naturaleza. El uso conjunto de `group_by()` y `summarise()` es una combinación perfecta.
-]]
-
-.pull-left[
-```{r echo=FALSE, out.width="100%", fig.align='center', dpi=200, fig.retina=2, fig.alt='Representación grafica del uso de group_by y summarise. El primer recuadro se observa la data completa, en el segundo se encuentra agrupado y en el tercero el producto de la aplicación de summarise.', fig.cap="Data transformation with dplyr:: CHEAT SHEET"}
-knitr::include_graphics("img/group_by_01.png",
-                        dpi = 300)
-```
-]
-
-.pull-right[
-<br>
-.line-space1-7[.code110[
-```{r eval=FALSE}
-mtcars %>%
-  group_by(cyl) %>%
-  summarise(
-    avg = mean(mpg)
-  )
-```
-]]]
-
----
-## Uso de `summarise()`
-
-.panelset[
-.panel[.panel-name[Intro]
-
-.left-column[.line-space1-7[.font110[
-Usaremos la misma [BD de COVID-19 que empleamos en la sesión 03](https://healthinnovation.github.io/curso-introduccion-r-tidyverse/sesion_03/#19).
-
-Este dataset está alojada en el siguiente repositorio de GitHub ([click aquí](https://github.com/CSSEGISandData/COVID-19)).
-]]]
-
-.right-column[.font80[
-```{r echo=FALSE, out.width="100%", fig.align='center', dpi=200, fig.retina=2, fig.alt="Repositorio github de personas fallecidas por Coronavirus a nivel global", fig.cap="Personas fallecidas por Coronavirus a nivel global"}
-knitr::include_graphics("img/github_covid_1.png",
-                        dpi = 300) 
-```
-]]]
-
-.panel[.panel-name[Importación]
-
-Mediante la función `read_csv` podremos importar la data directamente desde **Github**.
-
-.scroll-output350[
-```{r echo=TRUE, message=FALSE, warning=FALSE, R.options = list(width = 90)}
-covid19 <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
-covid19
-```
-]]
-]
-
----
-
-```{r, echo=FALSE}
-description_summar_1 <- ".line-space1-5[.font110[Recordar que primero debemos *pivotear* la data para poder trabajar con ella. Obtendremos resúmenes de casos por muerte COVID-19 por países.]]"
-```
-
-`r chunk_reveal("summarise_1", break_type = "user", title = paste0("#Uso de .code[summarise()] \n", description_summar_1), chunk_options = "R.options = list(width = 55)")`
-
-
-```{r summarise_1, include = FALSE}
-covid19 %>% #BREAK
-  select(-c(Lat:Long)) %>% 
-  pivot_longer(
-    cols = -c(`Province/State`:`Country/Region`),
-    names_to = "fecha",
-    values_to = "fallecidos"
-  ) %>% #BREAK
-  group_by(`Country/Region`) %>% #BREAK
-  summarise(
-    M = mean(fallecidos, na.rm = TRUE),
-    DE = sd(fallecidos, na.rm = TRUE),
-    Max = max(fallecidos, na.rm = TRUE),
-    Min = min(fallecidos, na.rm = TRUE)
-  ) %>% #BREAK
-  arrange(desc(M)) #BREAK
-```
-
-```{css, echo=FALSE}
-.panel2-summarise_1-user {
-    height: 375px;
-    overflow-y: auto !important;
-}
-```
-
----
-```{r include=FALSE}
-covid19_tidy <- covid19 %>% 
-  select(-c(Lat:Long)) %>% 
-  pivot_longer(
-    cols = -c(`Province/State`:`Country/Region`),
-    names_to = "fecha",
-    values_to = "fallecidos"
-  ) 
-```
-
-
-```{r, echo=FALSE}
-description_summar_2 <- ".line-space1-5[.font110[Guardaremos la data pivoteada en un objeto llamado covid19_tidy, para no extender demasiado el código. Además, veamos lo sencillo que es poder introducir un filter a los resultados obtenidos.]]"
-```
-
-`r chunk_reveal("summarise_2", break_type = "user", title = paste0("#Uso de .code[summarise()] \n", description_summar_2), chunk_options = "R.options = list(width = 55)")`
-
-
-```{r summarise_2, include = FALSE}
-covid19_tidy %>% #BREAK
-  group_by(`Country/Region`) %>% #BREAK
-  summarise(
-    M = mean(fallecidos, na.rm = TRUE),
-    DE = sd(fallecidos, na.rm = TRUE),
-    Max = max(fallecidos, na.rm = TRUE),
-    Min = min(fallecidos, na.rm = TRUE)
-  ) %>% #BREAK
-  arrange(desc(M)) #BREAK
-```
-
-```{css, echo=FALSE}
-.panel2-summarise_2-user {
-    height: 375px;
-    overflow-y: auto !important;
-}
-```
----
-
-```{r, echo=FALSE}
-description_summar_3 <- ".line-space1-5[.font110[Guardaremos la data pivoteada en un objeto llamado covid19_tidy, para no extender demasiado el código. Además, veamos lo sencillo que es poder introducir un filter a los resultados obtenidos.]]"
-```
-
-`r chunk_reveal("summarise_3", break_type = "user", title = paste0("#Uso de .code[summarise()] \n", description_summar_3), chunk_options = "R.options = list(width = 55)")`
-
-
-```{r summarise_3, include = FALSE}
-covid19_tidy %>% #BREAK
-  mutate(
-    fecha = lubridate::mdy(fecha)
-  ) %>% #BREAK
-  filter(fecha > "2022-01-01") %>% #BREAK
-  group_by(`Country/Region`) %>% #BREAK
-  summarise(
-    M = mean(fallecidos, na.rm = TRUE),
-    DE = sd(fallecidos, na.rm = TRUE),
-    Max = max(fallecidos, na.rm = TRUE),
-    Min = min(fallecidos, na.rm = TRUE)
-  ) %>% #BREAK
-  arrange(desc(M)) #BREAK
-```
-
-```{css, echo=FALSE}
-.panel2-summarise_3-user {
-    height: 375px;
-    overflow-y: auto !important;
-}
-```
-
----
-## ¡Hazlo tú mismo!
-
-.line-space2-0[.font120[
-1. Replica los procedimientos observados en las diapositivas
-1. Genera nuevas solicitudes en summarise que consideres pertinente.
-1. Usa nuevas reglas de filtrado
-]]
-
-```{r echo=FALSE}
-countdown(minutes = 8,
-          margin = "1em",
-          font_size = "4em",
-          warn_when = 30)
 ```
 
 ---
