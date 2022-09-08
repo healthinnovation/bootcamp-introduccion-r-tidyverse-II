@@ -148,6 +148,206 @@ class: center, middle, inverse
 # Exploración competencial
 
 ---
+## Uso de `group_by()`
+
+.line-space1-7[.font110[
+Esta función permite poder indicarle a R que las operaciones que hagamos en adelante, sean divididas y aplicadas por las agrupaciones que sea haya formado. Es decir, que se puede hacer la agrupación por una o múltiples variables.
+]]
+
+.pull-left[.scroll-output350[
+```{r R.options = list(width = 42), warning=FALSE, message=FALSE}
+library(tidyverse)
+storms %>% 
+  filter(year >= 2010) %>% 
+  group_by(name)
+```
+]]
+.line-space2-0[.font110[
+.pull-right[
+La función `group_by()` solo configura como será el tratamiento de la data en adelante. No observará ningún cambio percepctible en los datos con excepción de:
+```{r eval=FALSE}
+# Groups:   name [112]
+```
+]]]
+
+---
+## Uso de `summarise()`
+
+.line-space1-7[.code110[
+Esta función permite obtener algun resumen de los datos, como la media, desviación estándar, valores máximos, mínimos, calculos de prueba estadística, y la mayoría de funciones de esta naturaleza. El uso conjunto de `group_by()` y `summarise()` es una combinación perfecta.
+]]
+
+.pull-left[
+```{r echo=FALSE, out.width="100%", fig.align='center', dpi=200, fig.retina=2, fig.alt='Representación grafica del uso de group_by y summarise. El primer recuadro se observa la data completa, en el segundo se encuentra agrupado y en el tercero el producto de la aplicación de summarise.', fig.cap="Data transformation with dplyr:: CHEAT SHEET"}
+knitr::include_graphics("img/group_by_01.png",
+                        dpi = 300)
+```
+]
+
+.pull-right[
+<br>
+.line-space1-7[.code110[
+```{r eval=FALSE}
+mtcars %>%
+  group_by(cyl) %>%
+  summarise(
+    avg = mean(mpg)
+  )
+```
+]]]
+
+---
+## Uso de `summarise()`
+
+.panelset[
+.panel[.panel-name[Intro]
+
+.left-column[.line-space1-7[.font110[
+Usaremos la misma [BD de COVID-19 que empleamos en la sesión 03](https://healthinnovation.github.io/curso-introduccion-r-tidyverse/sesion_03/#19).
+
+Este dataset está alojada en el siguiente repositorio de GitHub ([click aquí](https://github.com/CSSEGISandData/COVID-19)).
+]]]
+
+.right-column[.font80[
+```{r echo=FALSE, out.width="100%", fig.align='center', dpi=200, fig.retina=2, fig.alt="Repositorio github de personas fallecidas por Coronavirus a nivel global", fig.cap="Personas fallecidas por Coronavirus a nivel global"}
+knitr::include_graphics("img/github_covid_1.png",
+                        dpi = 300) 
+```
+]]]
+
+.panel[.panel-name[Importación]
+
+Mediante la función `read_csv` podremos importar la data directamente desde **Github**.
+
+.scroll-output350[
+```{r echo=TRUE, message=FALSE, warning=FALSE, R.options = list(width = 90)}
+covid19 <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
+covid19
+```
+]]
+]
+
+---
+
+```{r, echo=FALSE}
+description_summar_1 <- ".line-space1-5[.font110[Recordar que primero debemos *pivotear* la data para poder trabajar con ella. Obtendremos resúmenes de casos por muerte COVID-19 por países.]]"
+```
+
+`r chunk_reveal("summarise_1", break_type = "user", title = paste0("#Uso de .code[summarise()] \n", description_summar_1), chunk_options = "R.options = list(width = 55)")`
+
+
+```{r summarise_1, include = FALSE}
+covid19 %>% #BREAK
+  select(-c(Lat:Long)) %>% 
+  pivot_longer(
+    cols = -c(`Province/State`:`Country/Region`),
+    names_to = "fecha",
+    values_to = "fallecidos"
+  ) %>% #BREAK
+  group_by(`Country/Region`) %>% #BREAK
+  summarise(
+    M = mean(fallecidos, na.rm = TRUE),
+    DE = sd(fallecidos, na.rm = TRUE),
+    Max = max(fallecidos, na.rm = TRUE),
+    Min = min(fallecidos, na.rm = TRUE)
+  ) %>% #BREAK
+  arrange(desc(M)) #BREAK
+```
+
+```{css, echo=FALSE}
+.panel2-summarise_1-user {
+    height: 375px;
+    overflow-y: auto !important;
+}
+```
+
+---
+```{r include=FALSE}
+covid19_tidy <- covid19 %>% 
+  select(-c(Lat:Long)) %>% 
+  pivot_longer(
+    cols = -c(`Province/State`:`Country/Region`),
+    names_to = "fecha",
+    values_to = "fallecidos"
+  ) 
+```
+
+
+```{r, echo=FALSE}
+description_summar_2 <- ".line-space1-5[.font110[Guardaremos la data pivoteada en un objeto llamado covid19_tidy, para no extender demasiado el código. Además, veamos lo sencillo que es poder introducir un filter a los resultados obtenidos.]]"
+```
+
+`r chunk_reveal("summarise_2", break_type = "user", title = paste0("#Uso de .code[summarise()] \n", description_summar_2), chunk_options = "R.options = list(width = 55)")`
+
+
+```{r summarise_2, include = FALSE}
+covid19_tidy %>% #BREAK
+  group_by(`Country/Region`) %>% #BREAK
+  summarise(
+    M = mean(fallecidos, na.rm = TRUE),
+    DE = sd(fallecidos, na.rm = TRUE),
+    Max = max(fallecidos, na.rm = TRUE),
+    Min = min(fallecidos, na.rm = TRUE)
+  ) %>% #BREAK
+  arrange(desc(M)) #BREAK
+```
+
+```{css, echo=FALSE}
+.panel2-summarise_2-user {
+    height: 375px;
+    overflow-y: auto !important;
+}
+```
+---
+
+```{r, echo=FALSE}
+description_summar_3 <- ".line-space1-5[.font110[Guardaremos la data pivoteada en un objeto llamado covid19_tidy, para no extender demasiado el código. Además, veamos lo sencillo que es poder introducir un filter a los resultados obtenidos.]]"
+```
+
+`r chunk_reveal("summarise_3", break_type = "user", title = paste0("#Uso de .code[summarise()] \n", description_summar_3), chunk_options = "R.options = list(width = 55)")`
+
+
+```{r summarise_3, include = FALSE}
+covid19_tidy %>% #BREAK
+  mutate(
+    fecha = lubridate::mdy(fecha)
+  ) %>% #BREAK
+  filter(fecha > "2022-01-01") %>% #BREAK
+  group_by(`Country/Region`) %>% #BREAK
+  summarise(
+    M = mean(fallecidos, na.rm = TRUE),
+    DE = sd(fallecidos, na.rm = TRUE),
+    Max = max(fallecidos, na.rm = TRUE),
+    Min = min(fallecidos, na.rm = TRUE)
+  ) %>% #BREAK
+  arrange(desc(M)) #BREAK
+```
+
+```{css, echo=FALSE}
+.panel2-summarise_3-user {
+    height: 375px;
+    overflow-y: auto !important;
+}
+```
+
+---
+## ¡Hazlo tú mismo!
+
+.line-space2-0[.font120[
+1. Replica los procedimientos observados en las diapositivas
+1. Genera nuevas solicitudes en summarise que consideres pertinente.
+1. Usa nuevas reglas de filtrado
+]]
+
+```{r echo=FALSE}
+countdown(minutes = 8,
+          margin = "1em",
+          font_size = "4em",
+          warn_when = 30)
+```
+
+
+---
 ## Funciones join
 
 .pull-left[
