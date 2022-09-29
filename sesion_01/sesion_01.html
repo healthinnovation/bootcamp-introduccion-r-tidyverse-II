@@ -4,7 +4,7 @@
     <title>Introducción a R y Tidyverse II</title>
     <meta charset="utf-8" />
     <meta name="author" content="Laboratorio de Innovación en Salud" />
-    <meta name="date" content="2022-09-08" />
+    <meta name="date" content="2022-09-29" />
     <script src="sesion_01_files/header-attrs/header-attrs.js"></script>
     <link href="sesion_01_files/tile-view/tile-view.css" rel="stylesheet" />
     <script src="sesion_01_files/tile-view/tile-view.js"></script>
@@ -138,7 +138,7 @@ top:1em;right:1em;
 
 ## Laboratorio de Innovación en Salud  
 
-### 2022-09-08
+### 2022-09-29
 
 &lt;br&gt;
 
@@ -169,7 +169,7 @@ class: center, middle, inverse
 
 
 
-.scroll-output375[
+.scroll-output350[
 
 ```r
 trial_data &lt;- readxl::read_excel("data/researchdata.xlsx") %&gt;%
@@ -498,7 +498,7 @@ Para este ejercicio usaremos la [ENDES 2020](https://minhaskamal.github.io/DownG
 4. Usando el documento `Diccionario - REC1.pdf`, filtrar únicamente los casos de mujeres que tengan edades entre los 12 y 49 años.
 ]]
 
-<div class="countdown" id="timer_d4e84bda" data-warn-when="60" data-update-every="1" tabindex="0" style="right:0;bottom:0;margin:0.5em;font-size:4em;">
+<div class="countdown" id="timer_2de9f9fe" data-warn-when="60" data-update-every="1" tabindex="0" style="right:0;bottom:0;margin:0.5em;font-size:4em;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -639,7 +639,7 @@ gapminder_wider &lt;- gapminder::gapminder %&gt;%
 
 .line-space1-7[.font110[Hagamos una prueba con con `gapminder_wider` para obtener el promedio de la esperanza de vida de sus 3 primeros registros anuales disponibles:]]
 
-.pull-left[.scroll-output350[
+.pull-left[
 
 ```r
 gapminder_wider %&gt;%
@@ -653,7 +653,7 @@ gapminder_wider %&gt;%
     .after = "continent"
   )
 ```
-]]
+]
 
 .pull-left[.scroll-output350[
 
@@ -681,8 +681,6 @@ gapminder_wider %&gt;%
 ## #   lifeExp_1987 &lt;dbl&gt;, …
 ```
 ]]
-
-
 
 ---
 ## Uso de `c_across()`
