@@ -4,7 +4,7 @@
     <title>Introducción a R y Tidyverse II</title>
     <meta charset="utf-8" />
     <meta name="author" content="Laboratorio de Innovación en Salud" />
-    <meta name="date" content="2022-09-08" />
+    <meta name="date" content="2022-09-29" />
     <script src="sesion_03_files/header-attrs/header-attrs.js"></script>
     <link href="sesion_03_files/tile-view/tile-view.css" rel="stylesheet" />
     <script src="sesion_03_files/tile-view/tile-view.js"></script>
@@ -28,22 +28,24 @@
     <link href="sesion_03_files/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <script src="sesion_03_files/xaringanExtra-progressBar/progress-bar.js"></script>
     <meta name="github-repo" content="healthinnovation/bootcamp-introduccion-r-tidyverse-II"/>
-    <meta name="twitter:title" content="Plantilla Innovar Xaringan"/>
+    <meta name="twitter:title" content="Introducción a R y Tidyverse II Sesión 03"/>
     <meta name="twitter:description" content="Curso de Introducción a R y Tidyverse II: Sesión 03"/>
     <meta name="twitter:url" content="https://healthinnovation.github.io/bootcamp-introduccion-r-tidyverse-II/sesion_03/#1"/>
-    <meta name="twitter:image" content="https://healthinnovation.github.io/bootcamp-introduccion-r-tidyverse-II/sesion_03/img/cover-sesion03.png"/>
+    <meta name="twitter:image" content="https://healthinnovation.github.io/xaringan-innovar/bootcamp-introduccion-r-tidyverse-II/sesion_03/img/cover-sesion03.png"/>
     <meta name="twitter:image:alt" content="Cover de la Sesión 03 del curso de Introducción a R y Tidyverse II"/>
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:creator" content="@innovalab_imt"/>
     <meta name="twitter:site" content="@innovalab_imt"/>
-    <meta property="og:title" content="Plantilla Innovar Xaringan"/>
+    <meta property="og:title" content="Introducción a R y Tidyverse II Sesión 03"/>
     <meta property="og:description" content="Curso de Introducción a R y Tidyverse II: Sesión 03"/>
     <meta property="og:url" content="https://healthinnovation.github.io/bootcamp-introduccion-r-tidyverse-II/sesion_03/#1"/>
-    <meta property="og:image" content="https://healthinnovation.github.io/bootcamp-introduccion-r-tidyverse-II/sesion_03/img/cover-sesion03.png"/>
+    <meta property="og:image" content="https://healthinnovation.github.io/xaringan-innovar/bootcamp-introduccion-r-tidyverse-II/sesion_03/img/cover-sesion03.png"/>
     <meta property="og:image:alt" content="Cover de la Sesión 03 del curso de Introducción a R y Tidyverse II"/>
     <meta property="og:type" content="website"/>
     <meta property="og:locale" content="en_US"/>
     <meta property="article:author" content="Laboratorio de Innovación en Salud"/>
+    <link href="sesion_03_files/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="sesion_03_files/pagedtable/js/pagedtable.js"></script>
     <link href="sesion_03_files/countdown/countdown.css" rel="stylesheet" />
     <script src="sesion_03_files/countdown/countdown.js"></script>
     <link href="sesion_03_files/font-awesome-animation/font-awesome-animation-emi.css" rel="stylesheet" />
@@ -138,7 +140,7 @@ top:1em;right:1em;
 
 ## Laboratorio de Innovación en Salud  
 
-### 2022-09-08
+### 2022-09-29
 
 &lt;br&gt;
 
@@ -214,7 +216,7 @@ El encabezado de un `Rmd` contiene básicamente metadatos del archivo, formato g
 ---
 title: "Reporte de Proyecto de Análisis"
 subtitle: "Introducción a R y Tidyverse"
-date:2022-09-08
+date:2022-09-29
 output: html_document
 ---
 ```
@@ -233,7 +235,7 @@ author:
   - name: Brian N. Peña-Calero
     email: brianmsm@gmail.com
     affiliation: Laboratorio de Innovación en Salud
-date: 2022-09-08
+date: 2022-09-29
 output: html_document
 ---
 ```
@@ -337,7 +339,6 @@ Esta data de 32 casos...
 ]]
 
 ---
----
 # Cuerpo: Insertar código R
 
 .line-space1-5[.font110[
@@ -421,6 +422,22 @@ A continuación se muestran algunas configuraciones consideradas comunes para lo
 ]]
 
 ---
+# Cuerpo: Insertar código R
+
+.font105[.line-space1-5[
+Uno de las configuraciones chunk que más comúnmente se utiliza es el de `echo = FALSE` cuando se intenta no abrumar con el código, se insertan archivos externos (imágenes, videos, etc.) o se formatean los output (salidas personalizadas de tablas, apps, etc.).
+
+Por ejemplo. A continuación se mostrará una tabla formateada directamente.
+]]
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4"},{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4"},{"1":"22.8","2":"4","3":"108.0","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1"},{"1":"21.4","2":"6","3":"258.0","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1"},{"1":"18.7","2":"8","3":"360.0","4":"175","5":"3.15","6":"3.440","7":"17.02","8":"0","9":"0","10":"3","11":"2"},{"1":"18.1","2":"6","3":"225.0","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1"},{"1":"14.3","2":"8","3":"360.0","4":"245","5":"3.21","6":"3.570","7":"15.84","8":"0","9":"0","10":"3","11":"4"},{"1":"24.4","2":"4","3":"146.7","4":"62","5":"3.69","6":"3.190","7":"20.00","8":"1","9":"0","10":"4","11":"2"},{"1":"22.8","2":"4","3":"140.8","4":"95","5":"3.92","6":"3.150","7":"22.90","8":"1","9":"0","10":"4","11":"2"},{"1":"19.2","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.30","8":"1","9":"0","10":"4","11":"4"},{"1":"17.8","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.90","8":"1","9":"0","10":"4","11":"4"},{"1":"16.4","2":"8","3":"275.8","4":"180","5":"3.07","6":"4.070","7":"17.40","8":"0","9":"0","10":"3","11":"3"},{"1":"17.3","2":"8","3":"275.8","4":"180","5":"3.07","6":"3.730","7":"17.60","8":"0","9":"0","10":"3","11":"3"},{"1":"15.2","2":"8","3":"275.8","4":"180","5":"3.07","6":"3.780","7":"18.00","8":"0","9":"0","10":"3","11":"3"},{"1":"10.4","2":"8","3":"472.0","4":"205","5":"2.93","6":"5.250","7":"17.98","8":"0","9":"0","10":"3","11":"4"},{"1":"10.4","2":"8","3":"460.0","4":"215","5":"3.00","6":"5.424","7":"17.82","8":"0","9":"0","10":"3","11":"4"},{"1":"14.7","2":"8","3":"440.0","4":"230","5":"3.23","6":"5.345","7":"17.42","8":"0","9":"0","10":"3","11":"4"},{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"4","11":"1"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"4","11":"2"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"4","11":"1"},{"1":"21.5","2":"4","3":"120.1","4":"97","5":"3.70","6":"2.465","7":"20.01","8":"1","9":"0","10":"3","11":"1"},{"1":"15.5","2":"8","3":"318.0","4":"150","5":"2.76","6":"3.520","7":"16.87","8":"0","9":"0","10":"3","11":"2"},{"1":"15.2","2":"8","3":"304.0","4":"150","5":"3.15","6":"3.435","7":"17.30","8":"0","9":"0","10":"3","11":"2"},{"1":"13.3","2":"8","3":"350.0","4":"245","5":"3.73","6":"3.840","7":"15.41","8":"0","9":"0","10":"3","11":"4"},{"1":"19.2","2":"8","3":"400.0","4":"175","5":"3.08","6":"3.845","7":"17.05","8":"0","9":"0","10":"3","11":"2"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"4","11":"1"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"5","11":"2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"5","11":"2"},{"1":"15.8","2":"8","3":"351.0","4":"264","5":"4.22","6":"3.170","7":"14.50","8":"0","9":"1","10":"5","11":"4"},{"1":"19.7","2":"6","3":"145.0","4":"175","5":"3.62","6":"2.770","7":"15.50","8":"0","9":"1","10":"5","11":"6"},{"1":"15.0","2":"8","3":"301.0","4":"335","5":"3.54","6":"3.570","7":"14.60","8":"0","9":"1","10":"5","11":"8"},{"1":"21.4","2":"4","3":"121.0","4":"109","5":"4.11","6":"2.780","7":"18.60","8":"1","9":"1","10":"4","11":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[7],"max":[7]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+---
 # Cuerpo: Insertar imágenes
 .font110[Para insertar **imágenes**, existen 2 formas de hacerlo:]
 
@@ -465,402 +482,95 @@ knitr::include_graphics('https://rubenfcasal.github.io/bookdown_intro/images/rma
 1. Agregar algún texto descriptivo introductorio. Utiliza *cursivas*, **negritas**, ***negritas y cursivas*** y `código` para nombrar alguna función por ejemplo.
 ]]
 
-<div class="countdown" id="timer_84f88750" data-warn-when="30" data-update-every="1" tabindex="0" style="right:0;bottom:0;margin:1em;font-size:4em;">
+<div class="countdown" id="timer_603bcc03" data-warn-when="30" data-update-every="1" tabindex="0" style="right:0;bottom:0;margin:1em;font-size:4em;">
 <div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">08</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
+
 ---
-## Introducción a visualización de datos: ggcharts
 
-.pull-left[.line-space1-7[.font110[
-En R el paquete por excelencia para poder realizar gráficos es [`ggplot2`](https://ggplot2.tidyverse.org/). Sin embargo, este en particular amerita un curso entero dedicado a su enseñanza total y en detalle. Por otro lado, [`ggcharts`](https://github.com/thomas-neitmann/ggcharts/) es un paquete que utiliza por debajo a `ggplot2` para generar gráficos rápidos y de forma sencilla.
+# YAML - Intermedio
+.font105[.line-space2-0[
+En el encabezado YAML también se pueden configurar la visualización del documento de acuerdo al output solicitado.
 
-Lo mejor de todo es que es completamente compatible con las funciones de `ggplot2`.
+Se puede modificar el tema especificando `theme` dentro de `html_document` a cualquiera de los siguientes valores: `default`, `cerulean`, `journal`, `flatly`, `darkly`, `readable`, `spacelab`, `united`, `cosmo`, `lumen`, `paper`, `sandstone`, `simplex`, `yeti`.
 
-
-```r
-install.packages("ggcharts")
-```
-]]]
-
-.pull-right[.center[
-&lt;img src="https://raw.githubusercontent.com/thomas-neitmann/ggcharts/master/man/figures/ggcharts_hex.png" width="75%" /&gt;
+Así mismo, se puede modificar `highlight` dentro de `html_document` a cualquiera de los siguientes valores: `default`, `tango`, `pygments`, `kate`, `monochrome`, `espresso`, `zenburn`, `haddock`, `breezedark`, `textmate`.
 ]]
 
 ---
-## Uso de `ggcharts`
+.font105[.line-space1-5[Ejemplo de modificación YAML en `theme` y `highlight`]]
 
-.line-space1-7[.font110[Vamos a ejemplificar de forma sencilla cómo realizar un gráfico de barras usando la data `biomedicalrevenue` que muestra los ingresos anuales de las principales empresas biomédicas.]]
-
-.scroll-output350[
-
-```r
-library(dplyr)
-library(ggplot2)
-library(ggcharts)
-data("biomedicalrevenue")
-biomedicalrevenue %&gt;%
-  as_tibble() %&gt;%
-  filter(year %in% c(2012, 2015, 2018))
+.panelset[
+.panel[.panel-name[YAML]
+##### Modificación
+```yaml
+---
+title: "Reporte para aprendizaje"
+subtitle: "Capacitación"
+author: 
+  - name: Brian N. Peña-Calero
+    email: brianmsm@gmail.com
+    affiliation: Laboratorio de Innovación en Salud
+date: "27/11/2020"
+output: 
+  html_document: 
+    highlight: kate
+    theme: readable
+---
 ```
+]
 
-```
-## # A tibble: 84 × 3
-##    company            year revenue
-##    &lt;chr&gt;             &lt;int&gt;   &lt;dbl&gt;
-##  1 Johnson &amp; Johnson  2018    81.6
-##  2 Johnson &amp; Johnson  2015    70.1
-##  3 Johnson &amp; Johnson  2012    67.2
-##  4 Roche              2018    56.9
-##  5 Roche              2015    47.7
-##  6 Roche              2012    47.8
-##  7 Pfizer             2018    53.6
-##  8 Pfizer             2015    48.8
-##  9 Pfizer             2012    59.0
-## 10 Novartis           2018    51.9
-## # … with 74 more rows
-```
+.panel[.panel-name[R Markdown]
+.center[
+&lt;iframe src="https://brianmsm.github.io/rmakdown-basico/Reporte/Reporte_aprendizaje_theme.html" width="100%" height="400px" data-external="1"&gt;&lt;/iframe&gt;
+]
+]
 ]
 
 ---
-count: false
- 
-## Uso de ggcharts
-.panel1-bar_chart_1-user[
 
-```r
-*biomedicalrevenue %&gt;%
-* as_tibble()
-```
-]
- 
-.panel2-bar_chart_1-user[
+# YAML - Intermedio
+.font105[.line-space2-0[
+Adicionalmente, se puede incluir una tabla de contenidos, mediante la especificación de `toc: yes`, enumerarlo mediante `number_sections: yes`, indicar la profundidad de la enumeración `toc_depth: 3` (defecto) y mostrar un botón para ocultar/mostrar el código mediante `code_folding: show`.
 
-```
-## # A tibble: 224 × 3
-##    company            year revenue
-##    &lt;chr&gt;             &lt;int&gt;   &lt;dbl&gt;
-##  1 Johnson &amp; Johnson  2018    81.6
-##  2 Johnson &amp; Johnson  2017    76.5
-##  3 Johnson &amp; Johnson  2016    71.9
-##  4 Johnson &amp; Johnson  2015    70.1
-##  5 Johnson &amp; Johnson  2014    74.3
-##  6 Johnson &amp; Johnson  2013    71.3
-##  7 Johnson &amp; Johnson  2012    67.2
-##  8 Johnson &amp; Johnson  2011    65  
-##  9 Roche              2018    56.9
-## 10 Roche              2017    57.4
-## # … with 214 more rows
-```
-]
+]]
+
 
 ---
-count: false
- 
-## Uso de ggcharts
-.panel1-bar_chart_1-user[
+.font105[.line-space1-5[Ejemplo de modificación YAML para contenido]]
 
-```r
-biomedicalrevenue %&gt;%
-  as_tibble() %&gt;%
-* filter(year == 2018)
-```
-]
- 
-.panel2-bar_chart_1-user[
-
-```
-## # A tibble: 28 × 3
-##    company              year revenue
-##    &lt;chr&gt;               &lt;int&gt;   &lt;dbl&gt;
-##  1 Johnson &amp; Johnson    2018    81.6
-##  2 Roche                2018    56.9
-##  3 Pfizer               2018    53.6
-##  4 Novartis             2018    51.9
-##  5 Bayer                2018    45.1
-##  6 GlaxoSmithKline      2018    43.1
-##  7 Merck &amp; Co.          2018    42.3
-##  8 Sanofi               2018    39.1
-##  9 AbbVie               2018    32.8
-## 10 Abbott Laboratories  2018    30.6
-## # … with 18 more rows
-```
-]
-
+.panelset[
+.panel[.panel-name[YAML]
+##### Modificación
+```yaml
 ---
-count: false
- 
-## Uso de ggcharts
-.panel1-bar_chart_1-user[
-
-```r
-biomedicalrevenue %&gt;%
-  as_tibble() %&gt;%
-  filter(year == 2018) %&gt;%
-* bar_chart(x = company, y = revenue)
-```
-]
- 
-.panel2-bar_chart_1-user[
-&lt;img src="sesion_03_files/figure-html/bar_chart_1_user_03_output-1.png" width="75%" style="display: block; margin: auto;" /&gt;
-]
-
+title: "Reporte para aprendizaje"
+subtitle: "Capacitación"
+author: 
+  - name: Brian N. Peña-Calero
+    email: brianmsm@gmail.com
+    affiliation: Laboratorio de Innovación en Salud
+date: "27/11/2020"
+output: 
+  html_document: 
+    highlight: kate
+    theme: readable
+    toc: yes
+    number_sections: yes
+    toc_depth: 3
+    code_folding: show
 ---
-count: false
- 
-## Uso de ggcharts
-.panel1-bar_chart_1-user[
-
-```r
-biomedicalrevenue %&gt;%
-  as_tibble() %&gt;%
-  filter(year == 2018) %&gt;%
-  bar_chart(x = company, y = revenue) +
-* labs(
-*   title = "Barchart con ggcharts",
-*   y = "Ingresos en 2018",
-*   x = NULL
-* )
-```
-]
- 
-.panel2-bar_chart_1-user[
-&lt;img src="sesion_03_files/figure-html/bar_chart_1_user_04_output-1.png" width="75%" style="display: block; margin: auto;" /&gt;
-]
-
----
-count: false
- 
-## Uso de ggcharts
-.panel1-bar_chart_1-user[
-
-```r
-biomedicalrevenue %&gt;%
-  as_tibble() %&gt;%
-  filter(year == 2018) %&gt;%
-  bar_chart(x = company, y = revenue) +
-  labs(
-    title = "Barchart con ggcharts",
-    y = "Ingresos en 2018",
-    x = NULL
-  ) +
-* theme_bw()  # BREAK
-```
-]
- 
-.panel2-bar_chart_1-user[
-&lt;img src="sesion_03_files/figure-html/bar_chart_1_user_05_output-1.png" width="75%" style="display: block; margin: auto;" /&gt;
-]
-
-&lt;style&gt;
-.panel1-bar_chart_1-user {
-  color: black;
-  width: 38.6060606060606%;
-  hight: 32%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-.panel2-bar_chart_1-user {
-  color: black;
-  width: 59.3939393939394%;
-  hight: 32%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-.panel3-bar_chart_1-user {
-  color: black;
-  width: NA%;
-  hight: 33%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-&lt;/style&gt;
-
-
-
-
-
-&lt;style type="text/css"&gt;
-.panel2-bar_chart_1-user {
-    height: 500px;
-    overflow-y: auto !important;
-}
-&lt;/style&gt;
-
----
-count: false
- 
-## Uso de ggcharts
-.panel1-bar_chart_2-user[
-
-```r
-*biomedicalrevenue %&gt;%
-* as_tibble()
-```
-]
- 
-.panel2-bar_chart_2-user[
-
-```
-## # A tibble: 224 × 3
-##    company            year revenue
-##    &lt;chr&gt;             &lt;int&gt;   &lt;dbl&gt;
-##  1 Johnson &amp; Johnson  2018    81.6
-##  2 Johnson &amp; Johnson  2017    76.5
-##  3 Johnson &amp; Johnson  2016    71.9
-##  4 Johnson &amp; Johnson  2015    70.1
-##  5 Johnson &amp; Johnson  2014    74.3
-##  6 Johnson &amp; Johnson  2013    71.3
-##  7 Johnson &amp; Johnson  2012    67.2
-##  8 Johnson &amp; Johnson  2011    65  
-##  9 Roche              2018    56.9
-## 10 Roche              2017    57.4
-## # … with 214 more rows
 ```
 ]
 
----
-count: false
- 
-## Uso de ggcharts
-.panel1-bar_chart_2-user[
-
-```r
-biomedicalrevenue %&gt;%
-  as_tibble() %&gt;%
-* filter(year %in% c(2012, 2015, 2018))
-```
+.panel[.panel-name[R Markdown]
+.center[
+&lt;iframe src="https://brianmsm.github.io/rmakdown-basico/Reporte/Reporte_aprendizaje.html" width="100%" height="400px" data-external="1"&gt;&lt;/iframe&gt;
 ]
- 
-.panel2-bar_chart_2-user[
-
-```
-## # A tibble: 84 × 3
-##    company            year revenue
-##    &lt;chr&gt;             &lt;int&gt;   &lt;dbl&gt;
-##  1 Johnson &amp; Johnson  2018    81.6
-##  2 Johnson &amp; Johnson  2015    70.1
-##  3 Johnson &amp; Johnson  2012    67.2
-##  4 Roche              2018    56.9
-##  5 Roche              2015    47.7
-##  6 Roche              2012    47.8
-##  7 Pfizer             2018    53.6
-##  8 Pfizer             2015    48.8
-##  9 Pfizer             2012    59.0
-## 10 Novartis           2018    51.9
-## # … with 74 more rows
-```
 ]
-
----
-count: false
- 
-## Uso de ggcharts
-.panel1-bar_chart_2-user[
-
-```r
-biomedicalrevenue %&gt;%
-  as_tibble() %&gt;%
-  filter(year %in% c(2012, 2015, 2018)) %&gt;%
-* bar_chart(x = company, y = revenue,
-*           facet = year, top_n = 10)
-```
 ]
- 
-.panel2-bar_chart_2-user[
-&lt;img src="sesion_03_files/figure-html/bar_chart_2_user_03_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
-]
-
----
-count: false
- 
-## Uso de ggcharts
-.panel1-bar_chart_2-user[
-
-```r
-biomedicalrevenue %&gt;%
-  as_tibble() %&gt;%
-  filter(year %in% c(2012, 2015, 2018)) %&gt;%
-  bar_chart(x = company, y = revenue,
-            facet = year, top_n = 10) +
-* labs(
-*   title = "Gráfico con ggcharts",
-*   y = "Ingresos anuales",
-*   x = NULL
-* )
-```
-]
- 
-.panel2-bar_chart_2-user[
-&lt;img src="sesion_03_files/figure-html/bar_chart_2_user_04_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
-]
-
----
-count: false
- 
-## Uso de ggcharts
-.panel1-bar_chart_2-user[
-
-```r
-biomedicalrevenue %&gt;%
-  as_tibble() %&gt;%
-  filter(year %in% c(2012, 2015, 2018)) %&gt;%
-  bar_chart(x = company, y = revenue,
-            facet = year, top_n = 10) +
-  labs(
-    title = "Gráfico con ggcharts",
-    y = "Ingresos anuales",
-    x = NULL
-  ) +
-* theme_bw()
-```
-]
- 
-.panel2-bar_chart_2-user[
-&lt;img src="sesion_03_files/figure-html/bar_chart_2_user_05_output-1.png" width="95%" style="display: block; margin: auto;" /&gt;
-]
-
-&lt;style&gt;
-.panel1-bar_chart_2-user {
-  color: black;
-  width: 38.6060606060606%;
-  hight: 32%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-.panel2-bar_chart_2-user {
-  color: black;
-  width: 59.3939393939394%;
-  hight: 32%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-.panel3-bar_chart_2-user {
-  color: black;
-  width: NA%;
-  hight: 33%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-&lt;/style&gt;
-
-
-
-
-
-&lt;style type="text/css"&gt;
-.panel2-bar_chart_2-user {
-    height: 500px;
-    overflow-y: auto !important;
-}
-&lt;/style&gt;
 
 ---
 class: center, middle

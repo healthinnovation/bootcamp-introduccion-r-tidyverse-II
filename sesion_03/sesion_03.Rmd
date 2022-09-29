@@ -100,12 +100,12 @@ xaringanExtra::use_progress_bar(color = "#0051BA",
 
 ```{r metathis, echo=FALSE}
 meta() %>%
-  meta_name("github-repo" = "healthinnovation/bootcamp-introduccion-r-tidyverse-II") %>% 
+  meta_name("github-repo" = "healthinnovation/bootcamp-introduccion-r-tidyverse-II") %>%
   meta_social(
-    title = "Plantilla Innovar Xaringan",
+    title = "Introducción a R y Tidyverse II Sesión 03",
     description = "Curso de Introducción a R y Tidyverse II: Sesión 03",
     url = "https://healthinnovation.github.io/bootcamp-introduccion-r-tidyverse-II/sesion_03/#1",
-    image = "https://healthinnovation.github.io/bootcamp-introduccion-r-tidyverse-II/sesion_03/img/cover-sesion03.png",
+    image = "https://healthinnovation.github.io/xaringan-innovar/bootcamp-introduccion-r-tidyverse-II/sesion_03/img/cover-sesion03.png",
     image_alt = "Cover de la Sesión 03 del curso de Introducción a R y Tidyverse II",
     og_type = "website",
     og_author = "Laboratorio de Innovación en Salud",
@@ -327,7 +327,6 @@ Esta data de `r nrow(mtcars)` casos...
 ]]
 
 ---
----
 # Cuerpo: Insertar código R
 
 .line-space1-5[.font110[
@@ -404,6 +403,21 @@ A continuación se muestran algunas configuraciones consideradas comunes para lo
 ]]
 
 ---
+# Cuerpo: Insertar código R
+
+.font105[.line-space1-5[
+Uno de las configuraciones chunk que más comúnmente se utiliza es el de `echo = FALSE` cuando se intenta no abrumar con el código, se insertan archivos externos (imágenes, videos, etc.) o se formatean los output (salidas personalizadas de tablas, apps, etc.).
+
+Por ejemplo. A continuación se mostrará una tabla formateada directamente.
+]]
+
+```{r echo = FALSE, rows.print = 7}
+tibble::as_tibble(mtcars) %>% 
+  rmarkdown::paged_table() 
+```
+
+
+---
 # Cuerpo: Insertar imágenes
 .font110[Para insertar **imágenes**, existen 2 formas de hacerlo:]
 
@@ -457,88 +471,94 @@ countdown(minutes = 8,
           warn_when = 30)
 ```
 
+
 ---
-## Introducción a visualización de datos: ggcharts
 
-.pull-left[.line-space1-7[.font110[
-En R el paquete por excelencia para poder realizar gráficos es [`ggplot2`](https://ggplot2.tidyverse.org/). Sin embargo, este en particular amerita un curso entero dedicado a su enseñanza total y en detalle. Por otro lado, [`ggcharts`](https://github.com/thomas-neitmann/ggcharts/) es un paquete que utiliza por debajo a `ggplot2` para generar gráficos rápidos y de forma sencilla.
+# YAML - Intermedio
+.font105[.line-space2-0[
+En el encabezado YAML también se pueden configurar la visualización del documento de acuerdo al output solicitado.
 
-Lo mejor de todo es que es completamente compatible con las funciones de `ggplot2`.
+Se puede modificar el tema especificando `theme` dentro de `html_document` a cualquiera de los siguientes valores: `default`, `cerulean`, `journal`, `flatly`, `darkly`, `readable`, `spacelab`, `united`, `cosmo`, `lumen`, `paper`, `sandstone`, `simplex`, `yeti`.
 
-```{r eval=FALSE}
-install.packages("ggcharts")
-```
-]]]
-
-.pull-right[.center[
-```{r, echo=FALSE, out.width = '75%'}
-knitr::include_graphics("https://raw.githubusercontent.com/thomas-neitmann/ggcharts/master/man/figures/ggcharts_hex.png", dpi = 300)
-```
+Así mismo, se puede modificar `highlight` dentro de `html_document` a cualquiera de los siguientes valores: `default`, `tango`, `pygments`, `kate`, `monochrome`, `espresso`, `zenburn`, `haddock`, `breezedark`, `textmate`.
 ]]
 
 ---
-## Uso de `ggcharts`
+.font105[.line-space1-5[Ejemplo de modificación YAML en `theme` y `highlight`]]
 
-.line-space1-7[.font110[Vamos a ejemplificar de forma sencilla cómo realizar un gráfico de barras usando la data `biomedicalrevenue` que muestra los ingresos anuales de las principales empresas biomédicas.]]
-
-.scroll-output350[
-```{r}
-library(dplyr)
-library(ggplot2)
-library(ggcharts)
-data("biomedicalrevenue")
-biomedicalrevenue %>%
-  as_tibble() %>%
-  filter(year %in% c(2012, 2015, 2018))
+.panelset[
+.panel[.panel-name[YAML]
+##### Modificación
+```yaml
+---
+title: "Reporte para aprendizaje"
+subtitle: "Capacitación"
+author: 
+  - name: Brian N. Peña-Calero
+    email: brianmsm@gmail.com
+    affiliation: Laboratorio de Innovación en Salud
+date: "27/11/2020"
+output: 
+  html_document: 
+    highlight: kate
+    theme: readable
+---
 ```
 ]
 
----
-`r chunk_reveal("bar_chart_1", break_type = "user", title = "## Uso de ggcharts", chunk_options = 'fig.height=5.5, fig.width=5.8, fig.align="center", out.width = "75%"')`
-
-```{r bar_chart_1, include = FALSE}
-biomedicalrevenue %>%
-  as_tibble() %>% #BREAK
-  filter(year == 2018) %>% #BREAK
-  bar_chart(x = company, y = revenue) + #BREAK
-  labs( 
-    title = "Barchart con ggcharts",
-    y = "Ingresos en 2018",
-    x = NULL
-  ) + #BREAK
-  theme_bw() # BREAK
+.panel[.panel-name[R Markdown]
+.center[
+```{r echo = FALSE, out.width = '100%'}
+knitr::include_url("https://brianmsm.github.io/rmakdown-basico/Reporte/Reporte_aprendizaje_theme.html")
 ```
-
-```{css, echo=FALSE}
-.panel2-bar_chart_1-user {
-    height: 500px;
-    overflow-y: auto !important;
-}
-```
+]
+]
+]
 
 ---
-`r chunk_reveal("bar_chart_2", break_type = "user", title = "## Uso de ggcharts", chunk_options = 'fig.height=5, fig.width=8, fig.align="center", out.width = "95%"')`
 
-```{r bar_chart_2, include = FALSE}
-biomedicalrevenue %>%
-  as_tibble() %>% #BREAK
-  filter(year %in% c(2012, 2015, 2018)) %>% #BREAK
-  bar_chart(x = company, y = revenue, 
-            facet = year, top_n = 10) + #BREAK
-  labs(
-    title = "Gráfico con ggcharts",
-    y = "Ingresos anuales",
-    x = NULL
-  ) + #BREAK
-  theme_bw() #BREAK
-```
+# YAML - Intermedio
+.font105[.line-space2-0[
+Adicionalmente, se puede incluir una tabla de contenidos, mediante la especificación de `toc: yes`, enumerarlo mediante `number_sections: yes`, indicar la profundidad de la enumeración `toc_depth: 3` (defecto) y mostrar un botón para ocultar/mostrar el código mediante `code_folding: show`.
 
-```{css, echo=FALSE}
-.panel2-bar_chart_2-user {
-    height: 500px;
-    overflow-y: auto !important;
-}
+]]
+
+
+---
+.font105[.line-space1-5[Ejemplo de modificación YAML para contenido]]
+
+.panelset[
+.panel[.panel-name[YAML]
+##### Modificación
+```yaml
+---
+title: "Reporte para aprendizaje"
+subtitle: "Capacitación"
+author: 
+  - name: Brian N. Peña-Calero
+    email: brianmsm@gmail.com
+    affiliation: Laboratorio de Innovación en Salud
+date: "27/11/2020"
+output: 
+  html_document: 
+    highlight: kate
+    theme: readable
+    toc: yes
+    number_sections: yes
+    toc_depth: 3
+    code_folding: show
+---
 ```
+]
+
+.panel[.panel-name[R Markdown]
+.center[
+```{r echo = FALSE, out.width = '100%'}
+knitr::include_url("https://brianmsm.github.io/rmakdown-basico/Reporte/Reporte_aprendizaje.html")
+```
+]
+]
+]
 
 ---
 class: center, middle
